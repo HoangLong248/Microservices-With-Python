@@ -7,7 +7,8 @@ services:
     ports:
       - 8000:8000
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   db:
     image: mysql:5.7.22
     restart: always
@@ -18,3 +19,7 @@ services:
       MYSQL_ROOT_PASSWORD: root
     ports:
       - 33306:3306
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
