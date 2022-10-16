@@ -38,7 +38,7 @@ class ProductViewSet(viewsets.ViewSet):
 
 class UserApiView(APIView):
     def get(self, _):
-        users = User.object.all()
+        users = User.objects.all()
         user = random.choice(users)
         return Response({
             'id': user.id
