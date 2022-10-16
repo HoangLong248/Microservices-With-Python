@@ -26,3 +26,5 @@ services:
       retries: 10
     volumes:
       - mysql-db:/var/lib/mysql
+volumes:
+  mysql-db:
