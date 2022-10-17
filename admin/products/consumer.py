@@ -8,7 +8,7 @@ channel = connection.channel()
 
 channel.queue_declare(queue='admin')
 
-def callback(channel, method, properties, body):
+def callback(ch, method, properties, body):
     print('Receive in admin')
     print(body)
 
