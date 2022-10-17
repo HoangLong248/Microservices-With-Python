@@ -25,8 +25,8 @@ services:
       timeout: 20s
       retries: 10
     volumes:
-      - backend_mysql-db:/var/lib/mysql
+      - main_mysql-db:/var/lib/mysql
 
 volumes:
-  backend_mysql-db:
+  main_mysql-db:
     external: true
