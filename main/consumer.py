@@ -24,10 +24,10 @@ def callback(ch, method, properties, body):
         product.image = data['image']
         db.session.commit()
     elif properties.content_type == "product_deleted":
-        product = Product.query.get(data['id'])
+        product = Product.query.get(data)
         db.session.delete(product)
         db.session.commit()
-        
+
 channel.basic_consume(queue='main', on_message_callback=callback, auto_ack=True)
 
 print('Started Consuming')
