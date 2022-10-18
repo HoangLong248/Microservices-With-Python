@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from sqlalchemy import UniqueConstraint
@@ -36,10 +36,21 @@ class ProductUser(db.Model):
 def index():
     return jsonify(Product.query.all())
 
-@app.route("/api/user")
-def like():
+@app.route("/api/products/<int:id>/like", methods=["POST"])
+def like(id):
     req = requests.get("http://host.docker.internal:8000/api/user")
-    return jsonify(req.json())
+    json_req = req.json()
+
+    try:
+        productUser = ProductUser(user_id=json_req['id'], product_id=id)
+        db.session.add(productUser)
+        db.session.commit()
+    except:
+        abort(400, "You already liked this product")
+    
+    return jsonify({
+        'message': 'success'
+    })
 
 if __name__ == "__main__":
     app.run(debug=True)
