@@ -36,10 +36,10 @@ class ProductUser(db.Model):
 def index():
     return jsonify(Product.query.all())
 
-@app.route("/api/like", methods=["POST"])
+@app.route("/api/user")
 def like():
     req = requests.get("http://host.docker.internal:8000/api/user")
-    return jsonify(req.json)
-    
+    return jsonify(req.json())
+
 if __name__ == "__main__":
     app.run(debug=True)
