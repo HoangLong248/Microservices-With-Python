@@ -28,10 +28,14 @@ def callback(ch, method, properties, body):
         db.session.delete(product)
         db.session.commit()
 
-channel.basic_consume(queue='main', on_message_callback=callback, auto_ack=True)
+if __name__ == "__main__":
+    try:
+        channel.basic_consume(queue='main', on_message_callback=callback, auto_ack=True)
 
-print('Started Consuming')
+        print('Started Consuming')
 
-channel.start_consuming()
+        channel.start_consuming()
 
-channel.close()
+        channel.close()
+    except Exception as error:
+        print(str(error))
